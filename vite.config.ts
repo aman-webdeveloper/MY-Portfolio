@@ -29,6 +29,8 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    host: true,   // ✅ allow access from phone
+    port: 5173,   // ✅ fixed port (same as before)
     fs: {
       strict: true,
       deny: ["**/.*"],

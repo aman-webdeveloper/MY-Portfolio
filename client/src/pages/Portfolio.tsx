@@ -311,7 +311,7 @@ export default function Portfolio() {
                   onClick={() => {
                     const link = document.createElement('a');
                     link.href = '/assets/Aman_Kumar_CV.pdf';
-                    link.download = 'Aman_Kumar_CV.pdf';
+                    link.download = '.Aman Kumar {CV}.pdf';
                     link.click();
                   }}
                   data-testid="button-download-cv"
@@ -324,8 +324,8 @@ export default function Portfolio() {
             <div className="lg:w-1/2 flex justify-center" data-aos="zoom-in" data-aos-delay="200">
               <div className="relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500" 
-                  alt="Aman Kumar - Frontend Developer" 
+                  src="/assets/main.jpg" 
+                  alt="Aman Kumar" 
                   className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full object-cover shadow-2xl border-4 border-primary"
                   data-testid="profile-image"
                 />
@@ -417,7 +417,7 @@ export default function Portfolio() {
               <div data-aos="fade-left" data-aos-delay="200">
                 <div className="relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=600" 
+                    src="/assets/about.jpg"
                     alt="Professional developer working on laptop in office" 
                     className="w-full max-w-md mx-auto rounded-2xl shadow-2xl object-cover"
                     data-testid="professional-developer-image"
