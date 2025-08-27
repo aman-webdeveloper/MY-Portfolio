@@ -226,18 +226,26 @@ export default function Portfolio() {
             {/* Theme Toggle & Mobile Menu Button */}
             <div className="flex items-center space-x-4">
               <Button
-                variant="secondary"
+                variant="ghost"
                 size="sm"
                 onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                className="p-2"
+                className="relative p-1 w-14 h-7 rounded-full border-2 border-border hover:border-primary transition-all duration-300"
                 aria-label="Toggle theme"
                 data-testid="theme-toggle"
               >
-                {theme === "light" ? (
-                  <i className="fas fa-moon text-blue-400" />
-                ) : (
-                  <i className="fas fa-sun text-yellow-400" />
-                )}
+                <div className={`absolute inset-0.5 rounded-full bg-gradient-to-r transition-all duration-300 ${
+                  theme === "light" 
+                    ? "from-yellow-400 to-orange-400 translate-x-0" 
+                    : "from-blue-600 to-purple-600 translate-x-6"
+                }`}>
+                  <div className="w-full h-full rounded-full flex items-center justify-center">
+                    {theme === "light" ? (
+                      <i className="fas fa-sun text-white text-xs" />
+                    ) : (
+                      <i className="fas fa-moon text-white text-xs" />
+                    )}
+                  </div>
+                </div>
               </Button>
               
               <Button
@@ -279,26 +287,33 @@ export default function Portfolio() {
       <section id="home" className="min-h-screen flex items-center justify-center bg-background pt-16">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center justify-between max-w-6xl mx-auto">
-            <div className="lg:w-1/2 text-center lg:text-left mb-8 lg:mb-0" data-aos="fade-up">
-              <h1 className="text-5xl lg:text-7xl font-bold mb-6">
+            <div className="lg:w-1/2 text-center lg:text-left mb-8 lg:mb-0 px-4 sm:px-0" data-aos="fade-up">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
                 Hi, I'm <span className="text-primary">Aman Kumar</span>
               </h1>
-              <div className="text-2xl lg:text-3xl text-muted-foreground mb-6">
+              <div className="text-xl sm:text-2xl lg:text-3xl text-muted-foreground mb-4 sm:mb-6">
                 I'm a <span className="text-primary">{currentRole}</span>
               </div>
-              <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto lg:mx-0">
+              <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-sm sm:max-w-md mx-auto lg:mx-0 leading-relaxed">
                 Passionate about creating beautiful, responsive web applications with modern technologies like React, JavaScript, and cutting-edge design principles.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
                 <Button 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 font-semibold transition-all hover:scale-105"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-2 sm:py-3 font-semibold transition-all hover:scale-105 text-sm sm:text-base"
+                  onClick={() => window.location.href = "mailto:amnkumar4512@gmail.com?subject=Hiring Inquiry&body=Hi Aman, I'm interested in discussing a project with you."}
                   data-testid="button-hire-me"
                 >
                   <i className="fas fa-briefcase mr-2" />Hire Me
                 </Button>
                 <Button 
                   variant="outline"
-                  className="border-border hover:bg-secondary px-8 py-3 font-semibold transition-all hover:scale-105"
+                  className="border-border hover:bg-secondary px-6 sm:px-8 py-2 sm:py-3 font-semibold transition-all hover:scale-105 text-sm sm:text-base"
+                  onClick={() => {
+                    const link = document.createElement('a');
+                    link.href = '/assets/Aman_Kumar_CV.pdf';
+                    link.download = 'Aman_Kumar_CV.pdf';
+                    link.click();
+                  }}
                   data-testid="button-download-cv"
                 >
                   <i className="fas fa-download mr-2" />Download CV
@@ -309,13 +324,13 @@ export default function Portfolio() {
             <div className="lg:w-1/2 flex justify-center" data-aos="zoom-in" data-aos-delay="200">
               <div className="relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" 
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500" 
                   alt="Aman Kumar - Frontend Developer" 
-                  className="w-80 h-80 rounded-full object-cover shadow-2xl border-4 border-primary"
+                  className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full object-cover shadow-2xl border-4 border-primary"
                   data-testid="profile-image"
                 />
-                <div className="absolute -bottom-4 -right-4 bg-primary rounded-full p-4 shadow-lg animate-bounce-slow">
-                  <i className="fas fa-code text-primary-foreground text-2xl" />
+                <div className="absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 bg-primary rounded-full p-3 sm:p-4 shadow-lg animate-bounce-slow">
+                  <i className="fas fa-code text-primary-foreground text-xl sm:text-2xl" />
                 </div>
               </div>
             </div>
@@ -324,19 +339,19 @@ export default function Portfolio() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-secondary/50">
+      <section id="about" className="py-12 sm:py-16 lg:py-20 bg-secondary/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16" data-aos="fade-up">About Me</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 lg:mb-16" data-aos="fade-up">About Me</h2>
           
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div data-aos="fade-right">
-                <h3 className="text-2xl font-semibold mb-6 text-primary">Get to know me!</h3>
-                <p className="text-muted-foreground mb-6">
+              <div data-aos="fade-right" className="px-4 sm:px-0">
+                <h3 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-primary">Get to know me!</h3>
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
                   I'm a passionate Frontend Developer with expertise in building responsive, user-friendly web applications. 
                   I love turning complex problems into simple, beautiful designs and bringing ideas to life through code.
                 </p>
-                <p className="text-muted-foreground mb-8">
+                <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
                   With a strong foundation in React, JavaScript, and modern web technologies, I create digital experiences 
                   that are not only functional but also delightful to use. I'm always eager to learn new technologies 
                   and improve my craft.
@@ -359,24 +374,30 @@ export default function Portfolio() {
 
                 <div className="flex space-x-4 mb-8">
                   <a 
-                    href="#" 
-                    className="text-primary hover:text-primary/80 text-2xl transition-colors" 
+                    href="https://linkedin.com" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-blue-600 text-2xl transition-colors" 
                     aria-label="LinkedIn"
                     data-testid="social-linkedin"
                   >
                     <i className="fab fa-linkedin" />
                   </a>
                   <a 
-                    href="#" 
-                    className="text-primary hover:text-primary/80 text-2xl transition-colors" 
+                    href="https://github.com" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-gray-900 dark:hover:text-white text-2xl transition-colors" 
                     aria-label="GitHub"
                     data-testid="social-github"
                   >
                     <i className="fab fa-github" />
                   </a>
                   <a 
-                    href="#" 
-                    className="text-primary hover:text-primary/80 text-2xl transition-colors" 
+                    href="https://instagram.com" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-pink-500 text-2xl transition-colors" 
                     aria-label="Instagram"
                     data-testid="social-instagram"
                   >
@@ -386,6 +407,7 @@ export default function Portfolio() {
                 
                 <Button 
                   className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 font-semibold transition-all hover:scale-105"
+                  onClick={() => scrollToSection("contact")}
                   data-testid="button-lets-talk"
                 >
                   Let's Talk
@@ -414,9 +436,9 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20">
+      <section id="skills" className="py-12 sm:py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16" data-aos="fade-up">My Skills</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 lg:mb-16" data-aos="fade-up">My Skills</h2>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {skills.map((skill, index) => (
@@ -439,9 +461,9 @@ export default function Portfolio() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 bg-secondary/50">
+      <section id="projects" className="py-12 sm:py-16 lg:py-20 bg-secondary/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16" data-aos="fade-up">My Projects</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 lg:mb-16" data-aos="fade-up">My Projects</h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {projects.map((project, index) => (
@@ -472,9 +494,9 @@ export default function Portfolio() {
                       </span>
                     ))}
                   </div>
-                  <div className="flex gap-4">
+                  <div className="flex justify-center">
                     <Button 
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold w-full"
                       onClick={() => window.open(project.liveUrl, "_blank")}
                       data-testid={`button-live-demo-${index}`}
                     >
@@ -489,9 +511,9 @@ export default function Portfolio() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20">
+      <section id="services" className="py-12 sm:py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16" data-aos="fade-up">My Services</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 lg:mb-16" data-aos="fade-up">My Services</h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {[
@@ -546,9 +568,9 @@ export default function Portfolio() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 bg-secondary/50">
+      <section id="experience" className="py-12 sm:py-16 lg:py-20 bg-secondary/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16" data-aos="fade-up">Experience</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 lg:mb-16" data-aos="fade-up">Experience</h2>
           
           <div className="max-w-4xl mx-auto">
             <div className="relative">
@@ -599,9 +621,9 @@ export default function Portfolio() {
       </section>
 
       {/* Education Section */}
-      <section id="education" className="py-20">
+      <section id="education" className="py-12 sm:py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16" data-aos="fade-up">Education</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 lg:mb-16" data-aos="fade-up">Education</h2>
           
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8">
@@ -661,9 +683,9 @@ export default function Portfolio() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-secondary/50">
+      <section id="contact" className="py-12 sm:py-16 lg:py-20 bg-secondary/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16" data-aos="fade-up">Get In Touch</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 lg:mb-16" data-aos="fade-up">Get In Touch</h2>
           
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12">
@@ -693,15 +715,17 @@ export default function Portfolio() {
 
                 <div className="flex space-x-4 mt-8">
                   {[
-                    { icon: "fab fa-linkedin", label: "LinkedIn" },
-                    { icon: "fab fa-github", label: "GitHub" },
-                    { icon: "fab fa-instagram", label: "Instagram" },
-                    { icon: "fab fa-twitter", label: "Twitter" },
+                    { icon: "fab fa-linkedin", label: "LinkedIn", href: "https://linkedin.com", bgColor: "hover:bg-blue-600", textColor: "hover:text-white" },
+                    { icon: "fab fa-github", label: "GitHub", href: "https://github.com", bgColor: "hover:bg-gray-900 dark:hover:bg-white", textColor: "hover:text-white dark:hover:text-gray-900" },
+                    { icon: "fab fa-instagram", label: "Instagram", href: "https://instagram.com", bgColor: "hover:bg-pink-500", textColor: "hover:text-white" },
+                    { icon: "fab fa-twitter", label: "Twitter", href: "https://twitter.com", bgColor: "hover:bg-blue-400", textColor: "hover:text-white" },
                   ].map((social) => (
                     <a 
                       key={social.label}
-                      href="#" 
-                      className="bg-primary/20 hover:bg-primary text-primary hover:text-primary-foreground w-12 h-12 rounded-full flex items-center justify-center transition-all" 
+                      href={social.href} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`bg-primary/20 ${social.bgColor} text-primary ${social.textColor} w-12 h-12 rounded-full flex items-center justify-center transition-all`} 
                       aria-label={social.label}
                       data-testid={`social-${social.label.toLowerCase()}`}
                     >
@@ -795,15 +819,17 @@ export default function Portfolio() {
               </p>
               <div className="flex space-x-4">
                 {[
-                  { icon: "fab fa-linkedin", label: "LinkedIn" },
-                  { icon: "fab fa-github", label: "GitHub" },
-                  { icon: "fab fa-instagram", label: "Instagram" },
-                  { icon: "fab fa-twitter", label: "Twitter" },
+                  { icon: "fab fa-linkedin", label: "LinkedIn", href: "https://linkedin.com", hoverColor: "hover:text-blue-600" },
+                  { icon: "fab fa-github", label: "GitHub", href: "https://github.com", hoverColor: "hover:text-gray-900 dark:hover:text-white" },
+                  { icon: "fab fa-instagram", label: "Instagram", href: "https://instagram.com", hoverColor: "hover:text-pink-500" },
+                  { icon: "fab fa-twitter", label: "Twitter", href: "https://twitter.com", hoverColor: "hover:text-blue-400" },
                 ].map((social) => (
                   <a 
                     key={social.label}
-                    href="#" 
-                    className="text-muted-foreground hover:text-primary transition-colors" 
+                    href={social.href} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`text-muted-foreground ${social.hoverColor} transition-colors`} 
                     aria-label={social.label}
                     data-testid={`footer-social-${social.label.toLowerCase()}`}
                   >
