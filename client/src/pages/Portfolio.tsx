@@ -20,7 +20,6 @@ export default function Portfolio() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [typingText, setTypingText] = useState("");
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -28,15 +27,13 @@ export default function Portfolio() {
     message: "",
   });
 
-  const roles = ["Frontend Developer", "React Developer", "UI/UX Enthusiast", "Web Designer"];
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+  // Remove typing animation - show static text
+  const currentRole = "Frontend Developer";
 
   // Initialize AOS
   useEffect(() => {
-    if (typeof window !== "undefined" && window.AOS) {
-      window.AOS.init({
+    if (typeof window !== "undefined" && (window as any).AOS) {
+      (window as any).AOS.init({
         duration: 1000,
         once: true,
         offset: 100,
@@ -45,36 +42,7 @@ export default function Portfolio() {
     }
   }, []);
 
-  // Typing animation effect
-  useEffect(() => {
-    const typeEffect = () => {
-      const currentRole = roles[roleIndex];
-      
-      if (isDeleting) {
-        setTypingText(currentRole.substring(0, charIndex - 1));
-        setCharIndex(charIndex - 1);
-      } else {
-        setTypingText(currentRole.substring(0, charIndex + 1));
-        setCharIndex(charIndex + 1);
-      }
-
-      let typeSpeed = isDeleting ? 50 : 100;
-
-      if (!isDeleting && charIndex === currentRole.length) {
-        typeSpeed = 2000;
-        setIsDeleting(true);
-      } else if (isDeleting && charIndex === 0) {
-        setIsDeleting(false);
-        setRoleIndex((roleIndex + 1) % roles.length);
-        typeSpeed = 500;
-      }
-
-      setTimeout(typeEffect, typeSpeed);
-    };
-
-    const timer = setTimeout(typeEffect, 100);
-    return () => clearTimeout(timer);
-  }, [roleIndex, charIndex, isDeleting, roles]);
+  // Removed typing animation effect
 
   // Scroll effects
   useEffect(() => {
@@ -121,22 +89,28 @@ export default function Portfolio() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        variant: "default",
-        title: "Message sent successfully!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
-        className: "bg-green-500 text-white border-green-600",
-      });
-      
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
-    }, 500);
+    // Create mailto link with form data
+    const { name, email, subject, message } = formData;
+    const mailtoLink = `mailto:amnkumar4512@gmail.com?subject=${encodeURIComponent(subject || 'Contact from Portfolio')}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+    
+    // Open mail client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    toast({
+      variant: "default",
+      title: "Opening your email client...",
+      description: "Your message will be sent through your default email app.",
+      className: "bg-green-500 text-white border-green-600",
+    });
+    
+    // Clear form
+    setFormData({
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -164,36 +138,42 @@ export default function Portfolio() {
       description: "A full-stack e-commerce solution with React, Redux, and payment integration.",
       image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
       tech: ["React", "Redux", "Node.js"],
+      liveUrl: "https://example.com",
     },
     {
       title: "Task Management App",
       description: "A productivity app with drag-and-drop functionality and real-time updates.",
       image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
       tech: ["React", "Firebase", "Tailwind"],
+      liveUrl: "https://example.com",
     },
     {
       title: "Weather App",
       description: "A beautiful weather application with location-based forecasts and animations.",
       image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
       tech: ["JavaScript", "API", "CSS3"],
+      liveUrl: "https://example.com",
     },
     {
       title: "Portfolio Website",
       description: "A responsive portfolio website with smooth animations and modern design.",
       image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
       tech: ["HTML5", "CSS3", "JavaScript"],
+      liveUrl: "https://example.com",
     },
     {
       title: "Blog Platform",
       description: "A full-featured blog platform with user authentication and content management.",
       image: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b7b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
       tech: ["React", "MongoDB", "Express"],
+      liveUrl: "https://example.com",
     },
     {
       title: "Chat Application",
       description: "A real-time chat application with Socket.io and modern UI components.",
       image: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
       tech: ["React", "Socket.io", "Node.js"],
+      liveUrl: "https://example.com",
     },
   ];
 
@@ -211,14 +191,24 @@ export default function Portfolio() {
           <div className="flex items-center justify-between h-16">
             <button 
               onClick={() => scrollToSection("home")}
-              className="text-xl font-bold text-primary"
+              className="text-2xl font-bold text-primary flex items-center space-x-2 hover:scale-105 transition-transform"
               data-testid="brand-logo"
             >
-              Aman Kumar
+              <div className="bg-primary text-primary-foreground w-10 h-10 rounded-lg flex items-center justify-center font-extrabold text-lg shadow-lg">
+                A
+              </div>
+              <div className="flex flex-col leading-tight">
+                <span className="text-lg font-extrabold bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
+                  Aman Kumar
+                </span>
+                <span className="text-xs text-muted-foreground font-medium">
+                  Frontend Dev
+                </span>
+              </div>
             </button>
             
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden xl:flex items-center space-x-8">
               {["home", "about", "skills", "projects", "services", "experience", "education", "contact"].map((section) => (
                 <button
                   key={section}
@@ -253,7 +243,7 @@ export default function Portfolio() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="md:hidden p-2"
+                className="xl:hidden p-2"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle mobile menu"
                 data-testid="mobile-menu-toggle"
@@ -269,7 +259,7 @@ export default function Portfolio() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 space-y-4">
+            <div className="xl:hidden py-4 space-y-4">
               {["home", "about", "skills", "projects", "services", "experience", "education", "contact"].map((section) => (
                 <button
                   key={section}
@@ -294,7 +284,7 @@ export default function Portfolio() {
                 Hi, I'm <span className="text-primary">Aman Kumar</span>
               </h1>
               <div className="text-2xl lg:text-3xl text-muted-foreground mb-6">
-                I'm a <span className="text-primary typing-animation">{typingText}</span>
+                I'm a <span className="text-primary">{currentRole}</span>
               </div>
               <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto lg:mx-0">
                 Passionate about creating beautiful, responsive web applications with modern technologies like React, JavaScript, and cutting-edge design principles.
@@ -338,7 +328,7 @@ export default function Portfolio() {
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16" data-aos="fade-up">About Me</h2>
           
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div data-aos="fade-right">
                 <h3 className="text-2xl font-semibold mb-6 text-primary">Get to know me!</h3>
@@ -359,15 +349,11 @@ export default function Portfolio() {
                   </div>
                   <div className="flex items-center space-x-3" data-testid="contact-info-email">
                     <i className="fas fa-envelope text-primary" />
-                    <span>Email: aman@example.com</span>
+                    <span>Email: amnkumar4512@gmail.com</span>
                   </div>
                   <div className="flex items-center space-x-3" data-testid="contact-info-location">
                     <i className="fas fa-map-marker-alt text-primary" />
                     <span>Location: India</span>
-                  </div>
-                  <div className="flex items-center space-x-3" data-testid="contact-info-phone">
-                    <i className="fas fa-phone text-primary" />
-                    <span>Phone: +91 12345 67890</span>
                   </div>
                 </div>
 
@@ -407,12 +393,20 @@ export default function Portfolio() {
               </div>
               
               <div data-aos="fade-left" data-aos-delay="200">
-                <img 
-                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" 
-                  alt="Developer workspace with laptop and coding setup" 
-                  className="rounded-xl shadow-2xl w-full h-auto"
-                  data-testid="workspace-image"
-                />
+                <div className="relative">
+                  <img 
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=600" 
+                    alt="Professional developer working on laptop in office" 
+                    className="w-full max-w-md mx-auto rounded-2xl shadow-2xl object-cover"
+                    data-testid="professional-developer-image"
+                  />
+                  <div className="absolute -bottom-4 -right-4 bg-primary rounded-xl p-4 shadow-lg">
+                    <i className="fas fa-laptop-code text-primary-foreground text-3xl" />
+                  </div>
+                  <div className="absolute -top-4 -left-4 bg-secondary rounded-xl p-3 shadow-lg">
+                    <i className="fas fa-lightbulb text-primary text-2xl" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -481,16 +475,10 @@ export default function Portfolio() {
                   <div className="flex gap-4">
                     <Button 
                       className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold"
+                      onClick={() => window.open(project.liveUrl, "_blank")}
                       data-testid={`button-live-demo-${index}`}
                     >
                       <i className="fas fa-external-link-alt mr-2" />Live Demo
-                    </Button>
-                    <Button 
-                      variant="outline"
-                      className="border-border hover:bg-secondary text-sm font-semibold"
-                      data-testid={`button-github-${index}`}
-                    >
-                      <i className="fab fa-github mr-2" />GitHub
                     </Button>
                   </div>
                 </CardContent>
@@ -566,36 +554,15 @@ export default function Portfolio() {
             <div className="relative">
               {[
                 {
-                  title: "Senior Frontend Developer",
-                  company: "TechCorp Solutions",
-                  period: "2023 - Present",
-                  description: "Led the development of multiple React-based web applications, mentored junior developers, and implemented best practices for code quality and performance optimization.",
+                  title: "Frontend Developer Intern",
+                  company: "Random IT Solutions",
+                  period: "June 2025 - September 2025",
+                  description: "Worked on frontend development projects focusing on website updates and e-commerce platform development using modern web technologies.",
                   achievements: [
-                    "Built and maintained 5+ production React applications",
-                    "Improved application performance by 40% through optimization",
-                    "Mentored 3 junior developers and established coding standards",
-                  ],
-                },
-                {
-                  title: "Frontend Developer",
-                  company: "Digital Innovations Ltd",
-                  period: "2021 - 2023",
-                  description: "Developed responsive web applications using React, JavaScript, and modern CSS frameworks. Collaborated with design teams to create pixel-perfect user interfaces.",
-                  achievements: [
-                    "Developed 10+ responsive web applications",
-                    "Collaborated with UX/UI designers on 15+ projects",
-                    "Implemented accessibility standards (WCAG 2.1)",
-                  ],
-                },
-                {
-                  title: "Junior Web Developer",
-                  company: "StartUp Solutions",
-                  period: "2020 - 2021",
-                  description: "Started my career building static websites and learning modern web technologies. Gained experience in HTML, CSS, JavaScript, and basic React development.",
-                  achievements: [
-                    "Built 20+ static websites using HTML, CSS, JavaScript",
-                    "Learned React and modern frontend tooling",
-                    "Participated in code reviews and team meetings",
+                    "Updated and maintained company websites with responsive design",
+                    "Developed e-commerce website with React and modern JavaScript",
+                    "Implemented user-friendly interfaces and optimized user experience",
+                    "Collaborated with team on various frontend development tasks",
                   ],
                 },
               ].map((exp, index) => (
@@ -709,9 +676,8 @@ export default function Portfolio() {
                 
                 <div className="space-y-6">
                   {[
-                    { icon: "fas fa-envelope", title: "Email", value: "aman.developer@example.com" },
-                    { icon: "fas fa-phone", title: "Phone", value: "+91 12345 67890" },
-                    { icon: "fas fa-map-marker-alt", title: "Location", value: "Mumbai, India" },
+                    { icon: "fas fa-envelope", title: "Email", value: "amnkumar4512@gmail.com" },
+                    { icon: "fas fa-map-marker-alt", title: "Location", value: "India" },
                   ].map((contact) => (
                     <div key={contact.title} className="flex items-center space-x-4" data-testid={`contact-${contact.title.toLowerCase()}`}>
                       <div className="bg-primary/20 w-12 h-12 rounded-full flex items-center justify-center">
