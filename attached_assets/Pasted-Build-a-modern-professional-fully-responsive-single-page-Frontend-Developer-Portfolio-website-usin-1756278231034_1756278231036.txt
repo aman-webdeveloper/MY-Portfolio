@@ -1,0 +1,129 @@
+Build a modern, professional, fully responsive single-page Frontend Developer Portfolio website using React + Vite.
+
+🔧 Tech & Setup
+
+React + Vite (fast dev setup)
+
+Bootstrap 5 (for responsive grid & components)
+
+AOS (Animate On Scroll) for section animations
+
+Font Awesome React Icons
+
+LocalStorage for dark/light theme toggle
+
+🎨 Design & UX
+
+Default Dark theme, toggle to Light (save in LocalStorage)
+
+Color Palette:
+
+Background: #0d1117
+
+Surface: #161b22
+
+Accent: #0d6efd
+
+Text: #ffffff
+
+Font: Poppins / Inter
+
+Smooth scroll + hover animations (0.3s)
+
+Sticky navbar + scrollspy highlight
+
+Scroll progress bar at top
+
+Back-to-top button with fade animation
+
+Typing animation for “Frontend Developer” in Hero
+
+📑 Sections (in order)
+
+Navbar
+
+Brand: Aman Kumar
+
+Links: Home, About, Skills, Projects, Services, Experience, Education, Contact
+
+Hamburger menu (mobile)
+
+Hero
+
+Profile image (assets/profile.png)
+
+Text: Name, Role (Frontend Developer), tagline
+
+CTA: Hire Me, Download CV
+
+Typing animation on role
+
+AOS: fade-up, zoom-in
+
+About
+
+Short intro + details (Name, Email, Location)
+
+Social Icons (LinkedIn, GitHub, Instagram)
+
+CTA buttons
+
+Skills
+
+Grid cards (HTML, CSS, JS, React, Bootstrap, Git, Figma, MySQL)
+
+Each card → icon + label + short text
+
+Hover: lift + glow
+
+Projects
+
+6 cards (assets/project1.png … project6.png)
+
+Each card → title, description, tech stack chips, buttons: Live Demo & GitHub
+
+Hover: translateY + shadow
+
+Services
+
+3–4 cards (Web Dev, Responsive UI, React SPA, Figma to Code)
+
+Experience
+
+Vertical timeline: role, company, dates, highlights
+
+Education
+
+MCA + BCA with institute, dates, details
+
+Contact
+
+Form (name, email, message) → dummy submit with success toast
+
+mailto: fallback
+
+Social icons again
+
+Footer
+
+© 2025 Aman Kumar
+
+Quick links + social icons
+
+✨ Animations
+
+AOS effects: fade-up, fade-right, zoom-in, flip-left
+
+Duration: 800–1000ms, once:true
+
+♿ Accessibility & SEO
+
+Semantic HTML
+
+Alt + lazy load for all images
+
+aria-labels for icons/links
+
+Meta tags: description, OpenGraph, Twitter Cards
+
+Custom favicon
